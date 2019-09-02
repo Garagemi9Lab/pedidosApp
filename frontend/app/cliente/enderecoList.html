@@ -1,0 +1,83 @@
+<h4 ng-if="cCtrl.cliente.endereco.length == 0">Nenhum endereço cadastrado</h4>
+<div class="col-xs-12 pt-3" ng-if="cCtrl.cliente.endereco.length > 0">
+  <div class="table-responsive">
+    <table class="table table-striped table-condensed">
+      <thead>
+        <tr>
+          <th>Endereços Cadastrados</th>
+        </tr>
+        <tr>
+          <th>Logradouro</th>
+          <th>Número</th>
+          <th>Complemento</th>
+          <th>Cep</th>
+          <th>Bairro</th>
+          <th>Cidade</th>
+          <th>UF</th>
+          <th>Tipo</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="endereco in cCtrl.cliente.endereco">
+          <td>{{ endereco.rua }}</td>
+          <td>{{ endereco.numero }}</td>
+          <td>{{ endereco.complemento }}</td>
+          <td>{{ endereco.cep }}</td>
+          <td>{{ endereco.bairro }}</td>
+          <td>{{ endereco.cidade }}</td>
+          <td>{{ endereco.uf }}</td>
+          <td>{{ endereco.tipo }}</td>
+          <td class="table-actions">
+            <button class="btn btn-warning" ng-click="cCtrl.showUpdateEndereco(endereco)">
+              <i class="fa fa-pencil"></i>
+            </button>
+            <button class="btn btn-danger" ng-click="cCtrl.deleteEndereco($index)">
+              <i class="fa fa-trash-o"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="col-xs-12" ng-show="!cCtrl.endStatus">
+  <div class="form-group">
+    <button class="btn btn-success" ng-click="cCtrl.showAddEndereco()">Adicionar Endereço</button>
+  </div>
+</div>
+
+<div id="cadEndereco" ng-show="cCtrl.endStatus" class="panel">
+  <div class="box-body">
+    <div class="col-xs-12 col-md-6 col-lg-2">
+      <div class="form-group">
+        <label for="eCep">Cep</label>
+        <input type="text" id="eCep" class="form-control" ng-model="cCtrl.endereco.cep" ng-blur="cCtrl.getByCep()"/>
+      </div>
+    </div>
+    <field id="eLogradouro" label="Logradouro" grid="12 6 6" type="Text" model="cCtrl.endereco.rua"></field>
+    <field id="eNumero" label="Número" grid="12 6 2" type="Number" model="cCtrl.endereco.numero"></field>
+    <field id="eComplemento" label="Complemento" grid="12 6 2" type="Text" model="cCtrl.endereco.complemento"></field>
+    <field id="eBairro" label="Bairro" grid="12 6 4" type="Text" model="cCtrl.endereco.bairro"></field>
+    <field id="eCidade" label="Cidade" grid="12 6 4" type="Text" model="cCtrl.endereco.cidade"></field>
+    <field id="eUf" label="UF" grid="12 6 4" type="Text" model="cCtrl.endereco.uf"></field>
+    <div class="col-xs-12 col-md-6 col-lg-4">
+      <div class="form-group">
+        <label>Tipo</label>
+        <select class="form-control" ng-model="cCtrl.endereco.tipo">
+          <option selected>RESIDENCIAL</option>
+          <option>COMERCIAL</option>
+          <option>OUTRO</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-xs-12 pt-3">
+      <div class="form-group">
+        <button class="btn btn-success" ng-click="cCtrl.addEndereco()" ng-if="cCtrl.endStatus == 'Adicionar'">Adicionar</button>
+        <button class="btn" ng-click="cCtrl.updateEndereco()" ng-if="cCtrl.endStatus == 'Adicionar'">Cancelar</button>
+        <button class="btn btn-warning" ng-click="cCtrl.updateEndereco()" ng-if="cCtrl.endStatus == 'Alterar'">Alterar</button>
+      </div>
+    </div>
+  </div>
+</div>

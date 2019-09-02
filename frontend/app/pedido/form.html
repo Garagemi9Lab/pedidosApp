@@ -1,0 +1,217 @@
+<div role="form">
+  <fieldset ng-disabled="pCtrl.pedido.status == 'CANCELADO' || pCtrl.tabCancel">
+    <div class="box-body">
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-aqua"><i class="fa fa-pencil-square-o"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Pedido</span>
+            <span class="info-box-number">{{:: pCtrl.pedido.numPedido }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon" ng-class="{'bg-red': pCtrl.pedido.status == 'CANCELADO', 'bg-yellow': pCtrl.pedido.status == 'EM ABERTO', 'bg-green': pCtrl.pedido.status == 'CONCLUÍDO'}"><i class="fa fa-pencil-square-o"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Status</span>
+            <span class="info-box-number">{{ pCtrl.pedido.status }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box-body">
+      <field id="dataPedido" label="Data do pedido" grid="12 6 6" type="date" model="pCtrl.pedido.dataPedido" readonly="pCtrl.tabUpdate"></field>
+      <field id="observacao" label="Observações" grid="12 6 6" type="text" model="pCtrl.pedido.observacao"></field>
+    </div>
+
+    <div class="box-body">
+      <div class="col-xs-12">
+        <fieldset>
+          <legend>Cliente</legend>
+          <div ng-if="pCtrl.pedido.status != 'CANCELADO'">
+            <div class="row">
+              <div class="col-xs-3"></div>
+              <div class="col-xs-6 px-3 pb-0 pt-1">
+                <h4>Buscar Cliente</h4>
+                <div class="sidebar-form buscab mb-0">
+                  <div class="input-group">
+                    <input type="text" name="q" class="form-control busca" placeholder="Digite algo..." ng-model="pCtrl.busca" ng-enter="pCtrl.findCliente()">
+                    <span class="input-group-btn">
+                      <button type="submit" ng-click="pCtrl.findCliente()" class="btn btn-flat busca"><i class="fa fa-search"></i>
+                      </button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-3"></div>
+            </div>
+          </div>
+
+          <div ng-show="pCtrl.listaClientes.length > 0">
+            <div class="col-xs-3"></div>
+            <div class="table-responsive no-padding col-xs-6 pb-3">
+              <div class="panel box-body table-bordered">
+                <table class="table table-hover table-condensed" id="cs">
+                  <tbody>
+                    <tr>
+                      <th>Nome</th>
+                      <th>Telefone</th>
+                    </tr>
+                    <tr ng-click="pCtrl.getCliente(cliente.telefone)" ng-repeat="cliente in pCtrl.listaClientes">
+                      <td><h5><strong>{{ cliente.nome }}</strong></h5></td>
+                      <td><h5><strong>{{ cliente.telefone }}</strong></h5></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-xs-3"></div>
+          </div>
+
+          <div class="col-xs-12 pt-3">
+            <h4>{{ pCtrl.nenhum }}</h4>
+            <button ng-show="pCtrl.addUsuario" ng-click="pCtrl.addCliente()">Adicionar novo cliente</button>
+          </div>
+
+          <div class="pt-5">
+            <div class="col-xs-12 py-2 bg-blue small-box" ng-if="pCtrl.pedido.cliente.nome">
+              <div class="col-md-2 col-lg-2 pt-2 pull-left">
+                <i class="fa fa-user-circle-o fa-4x"></i>
+              </div>
+              <div class="col-xs-12 col-md-3 col-lg-3">
+                <h5>CPF</h5>
+                <h4 class="info-box-number">{{ pCtrl.pedido.cliente.cpf }}</h4>
+              </div>
+              <div class="col-xs-12 col-md-3 col-lg-3">
+                <h5>Nome</h5>
+                <h4 class="info-box-number">{{ pCtrl.pedido.cliente.nome }}</h4>
+              </div>
+              <div class="col-xs-12 col-md-3 col-lg-3">
+                <h5>Telefone</h5>
+                <h4 class="info-box-number">{{ pCtrl.pedido.cliente.telefone }}</h4>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12" ng-if="pCtrl.pedido.cliente.nome && pCtrl.pedido.status != 'CANCELADO'">
+            <div class="table-responsive">
+              <table class="table table-condensed" ng-if="!pCtrl.tabCancel">
+                <thead>
+                  <tr>
+                    <th>Endereços para entrega</th>
+                  </tr>
+                  <tr>
+                    <th>Logradouro</th>
+                    <th>Número</th>
+                    <th>Complemento</th>
+                    <th>Cep</th>
+                    <th>Bairro</th>
+                    <th>Cidade</th>
+                    <th>UF</th>
+                    <th>Tipo</th>
+                    <th>Selecionar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="endereco in pCtrl.pedido.cliente.endereco">
+                    <td>{{ endereco.rua }}</td>
+                    <td>{{ endereco.numero }}</td>
+                    <td>{{ endereco.complemento }}</td>
+                    <td>{{ endereco.cep }}</td>
+                    <td>{{ endereco.bairro }}</td>
+                    <td>{{ endereco.cidade }}</td>
+                    <td>{{ endereco.uf }}</td>
+                    <td>{{ endereco.tipo }}</td>
+                    <td class="table-actions">
+                      <button class="btn btn-success btn-sm" ng-click="pCtrl.setEntrega(endereco)">
+                        <i class="fa fa-check" class="fa-pencil"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="8">A retirar</td>
+                    <td class="table-actions">
+                      <button class="btn btn-success btn-sm" ng-click="pCtrl.setEntrega(pCtrl.entrega)">
+                        <i class="fa fa-check" class="fa-pencil"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="col-xs-12">
+            <h4 ng-if="pCtrl.pedido.endEntrega">Endereço de entrega: {{ pCtrl.pedido.endEntrega }}</h4>
+          </div>
+
+        </fieldset>
+      </div>
+    </div>
+
+    <div class="box-body">
+      <div class="col-xs-12">
+        <fieldset>
+          <legend>Itens</legend>
+          <div ng-include="'pedido/itemList.html'"></div>
+        </fieldset>
+      </div>
+      <div class="col-xs-12">
+        <fieldset>
+          <legend>Financeiro</legend>
+          <div ng-include="'pedido/financeiroList.html'"></div>
+        </fieldset>
+      </div>
+      <div class="col-xs-12">
+        <div class="col-lg-4 col-xs-6">
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3><sup style="font-size: 20px">R$</sup> {{ pCtrl.pedido.financeiro.debitos.valorPedido | currency : '' : 2}}</h3>
+              <p>Total do Pedido</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-shopping-cart"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-xs-6">
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3><sup style="font-size: 20px">R$</sup> {{ pCtrl.pedido.financeiro.valorPago | currency : '' : 2}}</h3>
+              <p>Total Pago</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-credit-card"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-xs-6">
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3><sup style="font-size: 20px">R$</sup> {{ pCtrl.pedido.financeiro.valorFinal | currency : '' : 2}}</h3>
+              <p>Total a Pagar</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-check"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </fieldset>
+
+
+  <div class="box-footer">
+    <button class="btn btn-success" ng-click="pCtrl.entregar()" ng-if="pCtrl.pedido.entrega == 'PENDENTE' && pCtrl.pedido.status != 'CANCELADO' && pCtrl.tabUpdate">Confirmar Entrega</button>
+    <button class="btn btn-primary" ng-click="pCtrl.create()" ng-if="pCtrl.tabCreate">Incluir</button>
+    <button class="btn btn-primary" ng-if="pCtrl.tabUpdate && pCtrl.pedido.status != 'CANCELADO'" ng-click="pCtrl.update()">Alterar</button>
+    <button class="btn btn-danger" ng-if="pCtrl.tabCancel" ng-click="pCtrl.cancel()">Cancelar Pedido</button>
+    <button class="btn btn-default" ng-click="pCtrl.refresh()">Voltar</button>
+  </div>
+</div>

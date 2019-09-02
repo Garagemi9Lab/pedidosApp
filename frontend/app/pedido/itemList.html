@@ -1,0 +1,185 @@
+﻿<div class="col-xs-12">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Peça</th>
+        <th>Marca</th>
+        <th>Data de entrega</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <select class="form-control" ng-model="pCtrl.it.peca" ng-change="pCtrl.getServicosList(pCtrl.it.peca, $index)">
+            <option value=""></option>
+            <option ng-repeat="peca in pCtrl.pecas" value="{{peca}}">{{peca}}</option>
+          </select>
+        </td>
+        <td>
+          <input ng-model="pCtrl.it.marca" class="form-control" placeholder="Informe a marca" ng-readonly="pCtrl.tabDelete" type="text">
+        </td>
+        <td>
+          <input ng-model="pCtrl.it.dataEntrega" class="form-control" ng-readonly="pCtrl.tabDelete" type="date">
+        </td>
+        <td class="table-actions">
+          <button class="btn btn-success" ng-disabled="pCtrl.tabDelete" ng-click="pCtrl.addItem()" ng-show="pCtrl.statusItem == 'NOVO'">
+            <i class="fa fa-plus"></i>
+          </button>
+          <button class="btn btn-success" ng-disabled="pCtrl.tabDelete" ng-click="pCtrl.updateItem($index)" ng-show="pCtrl.statusItem == 'EDIT'">
+            <i class="fa fa-check"></i>
+          </button>
+        </td>
+      </tr>
+      <tr ng-show="pCtrl.it.peca != null">
+        <th>Descrição</th>
+        <th>Valor</th>
+        <th>Status</th>
+        <th>Ações</th>
+      </tr>
+      <tr ng-show="pCtrl.it.peca != null" ng-repeat="servico in pCtrl.it.servicos">
+        <td>
+          <select class="form-control" ng-model="servico.descricao" ng-change="pCtrl.getValorServico(pCtrl.it, $index)" ng-options="descricao for descricao in pCtrl.servicos">
+            <option value=""></option>
+          </select>
+        </td>
+        <td>
+          <input ng-model="servico.valor" class="form-control" placeholder="Informe o valor" ng-readonly="pCtrl.tabDelete" type="number" ng-change="pCtrl.calcServicos()" min="0">
+        </td>
+        <td>
+          <button class="btn" ng-class="{'btn-success': servico.status == 'CONCLUÍDO', 'btn-warning': servico.status == 'PENDENTE'}" ng-disabled="pCtrl.tabDelete" ng-click="pCtrl.changeItemStatus(servico)">
+            <i class="fa" ng-class="{'fa-times': servico.status == 'PENDENTE','fa-check': servico.status == 'CONCLUÍDO'}"></i>
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-success" ng-disabled="pCtrl.tabDelete" ng-show="$index == pCtrl.it.servicos.length - 1" ng-click="pCtrl.addServico($index)">
+            <i class="fa fa-plus"></i>
+          </button>
+          <button class="btn btn-danger" ng-disabled="pCtrl.tabDelete" ng-click="pCtrl.deleteServico($index)">
+            <i class="fa fa-trash-o"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="row pb-3" ng-show="pCtrl.pedido.itens.length > 0">
+    <div class="col-xs-12 no-padding text-bold">
+      <div class="col-xs-1">Serviços</div>
+      <div class="col-xs-2">Peça</div>
+      <div class="col-xs-2">Marca</div>
+      <div class="col-xs-2">Data de entrega</div>
+      <div class="col-xs-2">Valor Total</div>
+      <div class="col-xs-1">Status</div>
+      <div class="col-xs-2">Ações</div>
+    </div>
+
+    <div class="col-xs-12">
+      <hr class="my-3">
+    </div>
+
+    <div id="accordion">
+      <div class="col-xs-12 no-padding pb-3 panel" ng-repeat="(k,item) in pCtrl.pedido.itens">
+        <div class="col-xs-1">
+          <a href="#collapse{{k}}" class="collapsed chkacc" data-toggle="collapse" data-parent="#accordion" ng-click="$event.preventDefault()"><i class="fa"></i></a>
+        </div>
+        <div class="col-xs-2">
+          {{ item.peca }}
+        </div>
+        <div class="col-xs-2">
+          {{ item.marca }}
+        </div>
+        <div class="col-xs-2">
+          {{ item.dataEntrega | date : 'dd/MM/yyyy' }}
+        </div>
+        <div class="col-xs-2">
+          {{ item.valorTotal | currency : 'R$ ' : 2 }}
+        </div>
+        <div class="col-xs-1">
+          <i class="fa fa-2x" ng-class="{'fa-times-circle-o text-yellow': item.statusItem == 'PENDENTE','fa-check-circle-o text-green': item.statusItem == 'CONCLUÍDO'}"></i>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-warning btn-sm" ng-disabled="pCtrl.tabDelete" ng-click="pCtrl.showUpdateItem(item)">
+            <i class="fa fa-pencil"></i>
+          </button>
+          <button class="btn btn-danger btn-sm" ng-disabled="pCtrl.tabDelete" ng-click="pCtrl.deleteItem($index)">
+            <i class="fa fa-trash-o"></i>
+          </button>
+        </div>
+
+        <div id="collapse{{k}}" class="panel-collapse collapse row">
+          <div class="col-xs-3"></div>
+          <div class="col-xs-6 pt-4">
+            <div class="col-xs-12 text-bold pb-3">
+              <div class="col-xs-5">Serviço</div>
+              <div class="col-xs-4">Valor</div>
+              <div class="col-xs-3">Status</div>
+            </div>
+            <div class="col-xs-12 no-padding pb-3" ng-repeat="servico in item.servicos">
+              <div class="col-xs-5">
+                {{ servico.descricao }}
+              </div>
+              <div class="col-xs-4">
+                {{ servico.valor | currency : 'R$ ' : 2  }}
+              </div>
+              <div class="col-xs-3">
+                <i class="fa fa-2x" ng-class="{'fa-times-circle-o text-yellow': servico.status == 'PENDENTE','fa-check-circle-o text-green': servico.status == 'CONCLUÍDO'}"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-3"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- <table class="table" ng-show="pCtrl.pedido.itens.length > 0">
+    <thead>
+      <tr>
+        <th>Serviços</th>
+        <th>Peça</th>
+        <th>Marca</th>
+        <th>Data de entrega</th>
+        <th>Valor Total</th>
+        <th>Status</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody ng-repeat="(k,item) in pCtrl.pedido.itens" id="accordion">
+      <tr>
+        <td>
+          <a href="#collapse{{k}}" data-toggle="collapse" data-parent="#accordion">
+            <i class="fa fa-2x fa-caret-down text-black"></i>
+          </a>
+        </td>
+        <td>
+          {{ item.peca }}
+        </td>
+        <td>
+          {{ item.marca }}
+        </td>
+        <td>
+          {{ item.dataEntrega | date : 'dd/MM/yyyy' }}
+        </td>
+        <td>
+          {{ item.valorTotal | currency : 'R$ ' : 2 }}
+        </td>
+        <td>
+          <i class="fa fa-2x" ng-class="{'fa-times-circle-o text-yellow': item.statusItem == 'PENDENTE','fa-check-circle-o text-green': item.statusItem == 'CONCLUÍDO'}"></i>
+        </td>
+        <td class="table-actions">
+          <button class="btn btn-warning" ng-disabled="pCtrl.tabDelete" ng-click="pCtrl.showUpdateItem(item)">
+            <i class="fa fa-pencil"></i>
+          </button>
+          <button class="btn btn-danger" ng-disabled="pCtrl.tabDelete" ng-click="pCtrl.deleteItem($index)">
+            <i class="fa fa-trash-o"></i>
+          </button>
+        </td>
+      </tr>
+      <tr ng-repeat="servico in item.servicos">
+        {{ servico }}
+      </tr>
+    </tbody>
+  </table> -->
+</div>

@@ -1,0 +1,41 @@
+<div class="box-body">
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nº Pedido</th>
+          <th>Cliente</th>
+          <th>Data</th>
+          <th>Valor</th>
+          <th>Status</th>
+          <th>Financeiro</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="pedido in pCtrl.pedidos">
+          <td>{{:: pedido.numPedido }}</td>
+          <td>{{:: pedido.cliente[0].nome }}</td>
+          <td>{{:: pedido.dataPedido | date : 'dd/MM/yyyy'}}</td>
+          <td>{{:: pedido.financeiro.subTotal | currency : 'R$ ' : 2}}</td>
+          <td><span class="label" ng-class="{'label-danger':pedido.status == 'CANCELADO', 'label-warning': pedido.status == 'EM ABERTO', 'label-success':pedido.status == 'CONCLUÍDO'}">{{:: pedido.status }}</span></td>
+          <td><span class="label" ng-class="{'label-warning':pedido.financeiro.status == 'PENDENTE', 'label-success':pedido.financeiro.status == 'PAGO'}">{{:: pedido.financeiro.status }}</span></td>
+          <td class="table-actions">
+            <button class="btn" ng-class="{'btn-warning':pedido.status != 'CANCELADO', 'btn-primary':pedido.status == 'CANCELADO'}" ng-click="pCtrl.showTabUpdate(pedido)">
+              <i class="fa" ng-class="{'fa-pencil':pedido.status != 'CANCELADO', 'fa-eye':pedido.status == 'CANCELADO'}"></i>
+            </button>
+            <button class="btn btn-danger" ng-disabled="pedido.status == 'CANCELADO'" ng-click="pCtrl.showTabCancel(pedido)">
+              <i class="fa fa-trash-o"></i>
+            </button>
+            <button class="btn btn-success" ng-click="pCtrl.showTabTicket(pedido)">
+              <i class="fa fa-ticket"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box-footer clearfix">
+    <paginator url="/#!/pedidos" pages="{{ pCtrl.pages }}"></paginator>
+  </div>
+</div>

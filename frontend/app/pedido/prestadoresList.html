@@ -1,0 +1,36 @@
+<div class="col-xs-12">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Telefone</th>
+        <th>Função</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="prestador in pCtrl.pedido.prestadores">
+        <td>
+          <input ng-model="prestador.nome" class="form-control" placeholder="Informe o Nome" ng-readonly="pCtrl.tabDelete">
+        </td>
+        <td>
+          <input ng-model="prestador.telefone" class="form-control" placeholder="Informe o Telefone" ng-readonly="pCtrl.tabDelete" type="text">
+        </td>
+        <td>
+          <input ng-model="prestador.funcao" class="form-control" placeholder="Informe a função" ng-readonly="pCtrl.tabDelete" type="text">
+        </td>
+        <td class="table-actions">
+          <button class="btn btn-success" ng-disabled="pCtrl.tabDelete" ng-click="pCtrl.addPrestador($index)">
+            <i class="fa fa-plus"></i>
+          </button>
+          <button class="btn btn-warning" ng-disabled="pCtrl.tabDelete" ng-click="pCtrl.clonePrestador($index, prestador)">
+            <i class="fa fa-clone"></i>
+          </button>
+          <button class="btn btn-danger" ng-disabled="pCtrl.tabDelete" ng-click="pCtrl.deletePrestador($index)">
+            <i class="fa fa-trash-o"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

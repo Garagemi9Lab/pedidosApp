@@ -1,0 +1,28 @@
+<content-header name="Serviços" small="Cadastro"></content-header>
+
+<section class="content">
+  <div class="nav-tabs-custom" ng-controller="ServicosCtrl as sCtrl">
+    <ul class="nav nav-tabs">
+      <li ng-if="sCtrl.tabList" ng-class="{active: sCtrl.tabList}">
+        <a href data-target="#tabList" data-toggle="tab">
+          <i class="fa fa-bars"></i> Lista
+        </a>
+      </li>
+      <li ng-if="sCtrl.tabCreate" ng-class="{active: sCtrl.tabUpdate}">
+        <a href data-target="#tabCreate" data-toggle="tab"  ng-class="{active: sCtrl.tabCreate}">
+          <i class="fa fa-plus"></i> Incluir
+        </a>
+      </li>
+      <li ng-if="sCtrl.tabUpdate" ng-class="{active: sCtrl.tabUpdate}">
+        <a href data-target="#tabUpdate" data-toggle="tab">
+          <i class="fa fa-pencil"></i> Alterar
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane" id="tabList" ng-include="'servico/list.html'" ng-class="{active: sCtrl.tabList}" ng-if="sCtrl.tabList"></div>
+      <div class="tab-pane" id="tabCreate" ng-include="'servico/form.html'" ng-if="sCtrl.tabCreate"></div>
+      <div class="tab-pane" id="tabUpdate" ng-include="'servico/form.html'" ng-class="{active: sCtrl.tabUpdate}" ng-if="sCtrl.tabUpdate"></div>
+    </div>
+  </div>
+</section>

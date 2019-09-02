@@ -1,0 +1,53 @@
+<div class="col-md-12 col-sm-12 col-xs-12">
+  <div class="info-box">
+    <span class="info-box-icon" ng-class="{'bg-yellow': pCtrl.pedido.financeiro.status == 'PENDENTE', 'bg-green': pCtrl.pedido.financeiro.status == 'PAGO'}"><i class="fa fa-usd"></i></span>
+    <div class="info-box-content">
+      <span class="info-box-text">Status</span>
+      <span class="info-box-number">{{ pCtrl.pedido.financeiro.status }}</span>
+    </div>
+  </div>
+</div>
+
+<field id="vencimento" label="Vencimento" grid="12 6 6" type="date" model="pCtrl.pedido.financeiro.vencimento" readonly="pCtrl.tabCancel" c="dtp"></field>
+
+<div class="col-xs-12 col-sm-6 col-lg-6">
+  <div class="form-group">
+    <label for="frete">Frete</label>
+    <input type="Number" id="frete" class="form-control" ng-model="pCtrl.pedido.financeiro.debitos.frete" ng-readonly="pCtrl.tabCancel" ng-change="pCtrl.calcSubTotal()" min="0"/>
+  </div>
+</div>
+
+<div class="col-xs-12">
+  <fieldset>
+    <legend>Pagamentos</legend>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="pagamento in pCtrl.pedido.financeiro.creditos">
+          <td>
+            <input class="form-control" placeholder="Informe o Tipo" ng-readonly="pCtrl.tabCancel" ng-model="pagamento.tipo">
+          </td>
+          <td>
+            <input class="form-control" placeholder="Informe o Valor" ng-readonly="pCtrl.tabCancel" type="Number" ng-model="pagamento.valor" ng-change="pCtrl.calcPagamentos()">
+          </td>
+          <td class="table-actions">
+            <button class="btn btn-success" ng-disabled="pCtrl.tabCancel" ng-click="pCtrl.addPagamento($index)">
+              <i class="fa fa-plus"></i>
+            </button>
+            <button class="btn btn-warning" ng-disabled="pCtrl.tabCancel" ng-click="pCtrl.clonePagamento($index, pagamento)">
+              <i class="fa fa-clone"></i>
+            </button>
+            <button class="btn btn-danger" ng-disabled="pCtrl.tabCancel" ng-click="pCtrl.deletePagamento($index)">
+              <i class="fa fa-trash-o"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </fieldset>
+</div>

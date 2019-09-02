@@ -1,0 +1,212 @@
+<div class="row">
+  <div id="estabelecimento" class="col-xs-12 col-md-4 col-lg-4 fixprint">
+    <div class="box box-success">
+      <h4>
+        <i class="fa fa-pencil-square-o"></i> Pedido {{:: pCtrl.pedido.numPedido}}
+        <small class="pull-right">Data: {{:: pCtrl.pedido.dataPedido  | date : 'dd/MM/yyyy'}}</small>
+      </h4>
+      <div class="box-header with-border">
+        <div class="row">
+          <div class="col-xs-12 text-center">
+            <strong>Via Estabelecimento</strong>
+          </div>
+          <div class="col-xs-12">
+            <address>
+              <strong>Cliente: {{:: pCtrl.pedido.cliente[0].nome || pCtrl.pedido.cliente.nome }}</strong><br>
+              Cpf: {{:: pCtrl.pedido.cliente[0].cpf || pCtrl.pedido.cliente.cpf }}<br>
+              <i class="fa fa-phone"></i> {{:: pCtrl.pedido.cliente[0].telefone || pCtrl.pedido.cliente.telefone }}<br>
+              {{:: pCtrl.pedido.endEntrega }}
+            </address>
+          </div>
+        </div>
+      </div>
+
+      <div class="box-header with-border">
+        <div class="row">
+          <div class="col-xs-12 text-center">
+            <strong>Descritivo do pedido</strong>
+          </div>
+          <div class="col-xs-12 table-responsive">
+            <table class="table table-condensed small">
+              <thead>
+              <tr>
+                <th>Peça</th>
+                <th>Serviço</th>
+                <th>Valor</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in pCtrl.pedido.itens">
+                  <td>{{:: item.peca }}</td>
+                  <td><p ng-repeat="servico in item.servicos">{{:: servico.descricao }}</p></td>
+                  <td><p ng-repeat="servico in item.servicos">{{:: servico.valor  | currency : '' : 2 }}</p></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-xs-12 small" ng-if="pCtrl.pedido.observacao">
+            Obs: {{:: pCtrl.pedido.observacao}}
+          </div>
+          <!-- /.col -->
+        </div>
+      </div>
+
+      <div class="box-header with-border">
+        <div class="row">
+          <div class="col-xs-12 text-center pb-3">
+            <strong>Descritivo financeiro</strong>
+          </div>
+          <div class="col-xs-12">
+            <div class="table-responsive">
+              <table class="table table-condensed small">
+                <tbody>
+                  <tr>
+                    <th style="width:50%">Sub Total:</th>
+                    <td>{{:: pCtrl.pedido.financeiro.debitos.valorPedido | currency : 'R$' : 2}}</td>
+                  </tr>
+                  <tr ng-if="pCtrl.pedido.financeiro.debitos.jurosMulta > 0">
+                    <th>Juros e Multa:</th>
+                    <td>{{:: pCtrl.pedido.financeiro.debitos.jurosMulta | currency : 'R$' : 2}}</td>
+                  </tr>
+                  <tr ng-if="pCtrl.pedido.financeiro.debitos.frete > 0">
+                    <th>Frete:</th>
+                    <td>{{:: pCtrl.pedido.financeiro.debitos.frete | currency : 'R$' : 2}}</td>
+                  </tr>
+                  <tr ng-if="pCtrl.pedido.financeiro.valorPago > 0">
+                    <th>Pago:</th>
+                    <td>{{:: pCtrl.pedido.financeiro.valorPago | currency : 'R$' : 2}}</td>
+                  </tr>
+                  <tr>
+                    <th>Total:</th>
+                    <td>{{:: pCtrl.pedido.financeiro.valorFinal | currency : 'R$' : 2}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="cliente" class="col-xs-12 col-md-4 col-lg-4 fixprint">
+    <div class="box box-warning">
+      <h4>
+        <i class="fa fa-pencil-square-o"></i> Pedido {{:: pCtrl.pedido.numPedido}}
+        <small class="pull-right">Data: {{:: pCtrl.pedido.dataPedido  | date : 'dd/MM/yyyy'}}</small>
+      </h4>
+
+      <div class="box-header with-border">
+        <div class="row">
+          <div class="col-xs-12 text-center">
+            <strong>Via Cliente</strong>
+          </div>
+          <div class="col-xs-12">
+            <address>
+              <strong>Cliente: {{:: pCtrl.pedido.cliente[0].nome || pCtrl.pedido.cliente.nome }}</strong><br>
+              Cpf: {{:: pCtrl.pedido.cliente[0].cpf || pCtrl.pedido.cliente.cpf }}<br>
+              <i class="fa fa-phone"></i> {{:: pCtrl.pedido.cliente[0].telefone || pCtrl.pedido.cliente.telefone }}<br>
+              {{:: pCtrl.pedido.endEntrega }}
+            </address>
+          </div>
+        </div>
+      </div>
+
+      <div class="box-header with-border">
+        <div class="row">
+          <div class="col-xs-12 text-center">
+            <strong>Descritivo do pedido</strong>
+          </div>
+          <div class="col-xs-12 table-responsive">
+            <table class="table table-condensed small">
+              <thead>
+              <tr>
+                <th>Peça</th>
+                <th>Serviço</th>
+                <th>Valor</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in pCtrl.pedido.itens">
+                  <td>{{:: item.peca }}</td>
+                  <td><p ng-repeat="servico in item.servicos">{{:: servico.descricao }}</p></td>
+                  <td><p ng-repeat="servico in item.servicos">{{:: servico.valor  | currency : '' : 2 }}</p></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.col -->
+        </div>
+      </div>
+
+      <div class="box-header with-border">
+        <div class="row">
+          <div class="col-xs-12 text-center pb-3">
+            <strong>Descritivo financeiro</strong>
+          </div>
+          <div class="col-xs-12">
+            <div class="table-responsive">
+              <table class="table table-condensed small">
+                <tbody>
+                  <tr>
+                    <th style="width:50%">Sub Total:</th>
+                    <td>{{:: pCtrl.pedido.financeiro.debitos.valorPedido | currency : 'R$' : 2}}</td>
+                  </tr>
+                  <tr ng-if="pCtrl.pedido.financeiro.debitos.jurosMulta > 0">
+                    <th>Juros e Multa:</th>
+                    <td>{{:: pCtrl.pedido.financeiro.debitos.jurosMulta | currency : 'R$' : 2}}</td>
+                  </tr>
+                  <tr ng-if="pCtrl.pedido.financeiro.debitos.frete > 0">
+                    <th>Frete:</th>
+                    <td>{{:: pCtrl.pedido.financeiro.debitos.frete | currency : 'R$' : 2}}</td>
+                  </tr>
+                  <tr ng-if="pCtrl.pedido.financeiro.valorPago > 0">
+                    <th>Pago:</th>
+                    <td>{{:: pCtrl.pedido.financeiro.valorPago | currency : 'R$' : 2}}</td>
+                  </tr>
+                  <tr>
+                    <th>Total:</th>
+                    <td>{{:: pCtrl.pedido.financeiro.valorFinal | currency : 'R$' : 2}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-repeat="(k,item) in pCtrl.pedido.itens">
+    <div id="pecas" class="col-xs-12 col-md-4 col-lg-4 fixprint diff">
+      <div class="box box-danger">
+        <div class="box-header pb-0">
+          <h4>
+            <i class="fa fa-pencil-square-o"></i> Pedido {{:: pCtrl.pedido.numPedido}}
+            <small class="pull-right">Entrega: {{:: item.dataEntrega  | date : 'dd/MM/yyyy'}}</small>
+          </h4>
+        </div>
+        <div class="box-header pt-0 with-border">
+          <div class="row">
+            <div class="col-xs-12">
+              <ul class="list-unstyled">
+                <li><strong><h4><small>Cliente:</small> {{:: pCtrl.pedido.cliente[0].nome || pCtrl.pedido.cliente.nome }}</h4></strong></li>
+                <li><strong><h5>Cpf: {{:: pCtrl.pedido.cliente[0].cpf || pCtrl.pedido.cliente.cpf }}</h5></strong></li>
+                <li><strong><h5>Tel: {{:: pCtrl.pedido.cliente[0].telefone || pCtrl.pedido.cliente.telefone }}</h5></strong></li>
+                <li><h4><small>Peça: </small>{{:: item.peca }}</h4></li>
+                <li ng-repeat="servico in item.servicos"><h4>{{:: servico.descricao }}</h4></li>
+                <li><h4>{{:: k+1 }}/{{:: pCtrl.pedido.itens.length}}</h4></li>
+              </ul>
+            </div>
+            <!-- /.col -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="box-footer no-print">
+  <button class="btn btn-default" ng-if="pCtrl.tabTicket" ng-click="pCtrl.print()"><i class="fa fa-print"></i> Imprimir</button>
+  <button class="btn btn-default" ng-click="pCtrl.refresh()">Voltar</button>
+</div>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html ng-app="pedidosApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Pedidos App</title>
+    <link rel="stylesheet" href="/assets/css/deps.min.css">
+    <link rel="stylesheet" href="/assets/css/app.min.css">
+  </head>
+  <body class="skin-blue fixed sidebar-mini">
+    <div class="wrapper">
+      <header class="main-header no-print" ng-include="'/template/header.html'"></header>
+      <aside class="main-sidebar no-print" ng-include="'/template/menu.html'"></aside>
+      <div class="content-wrapper" ui-view></div>
+      <footer class="main-footer no-print" ng-include="'/template/footer.html'"></footer>
+    </div>
+    <script type="text/javascript" src="/assets/js/deps.min.js"></script>
+    <script type="text/javascript" src="/assets/js/app.min.js"></script>
+  </body>
+</html>

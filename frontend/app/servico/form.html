@@ -1,0 +1,38 @@
+<div role="form">
+  <fieldset>
+    <div class="box-body">
+      <div class="col-md-6 col-sm-4 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-aqua"><i class="fa fa-pencil-square-o"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Peça</span>
+            <span class="info-box-number">{{ sCtrl.servico.peca }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-4 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-green"><i class="fa fa-pencil-square-o"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Serviço</span>
+            <span class="info-box-number">{{ sCtrl.servico.descricao }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box-body">
+      <field id="peca" label="Peça" grid="12 6 6" type="text" model="sCtrl.servico.peca"></field>
+      <field id="servico" label="Serviço" grid="12 6 6" type="text" model="sCtrl.servico.descricao"></field>
+      <field id="valor" label="Valor" grid="12 6 6" type="Number" model="sCtrl.servico.valor"></field>
+      <field id="pontos" label="Pontos" grid="12 6 6" type="Number" model="sCtrl.servico.pontos"></field>
+    </div>
+  </fieldset>
+
+  <div class="box-footer">
+    <button class="btn btn-primary" ng-click="sCtrl.create()" ng-if="sCtrl.tabCreate">Incluir</button>
+    <button class="btn btn-primary" ng-if="sCtrl.tabUpdate" ng-click="sCtrl.update()">Alterar</button>
+    <button class="btn btn-default" ng-click="sCtrl.refresh()">Voltar</button>
+  </div>
+</div>

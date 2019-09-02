@@ -1,0 +1,31 @@
+<div class="box-body">
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>CPF</th>
+          <th>Nome</th>
+          <th>E-mail</th>
+          <th>Telefone</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="cliente in cCtrl.clientes | orderBy:'nome'">
+          <td>{{:: cliente.cpf }}</td>
+          <td>{{:: cliente.nome }}</td>
+          <td>{{:: cliente.email }}</td>
+          <td>{{:: cliente.telefone }}</td>
+          <td class="table-actions">
+            <button class="btn btn-warning" ng-click="cCtrl.showTabUpdate(cliente)">
+              <i class="fa fa-pencil"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box-footer clearfix">
+    <paginator url="/#!/clientes" pages="{{ cCtrl.pages }}"></paginator>
+  </div>
+</div>

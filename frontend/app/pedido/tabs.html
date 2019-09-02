@@ -1,0 +1,40 @@
+<content-header name="Pedidos" small="Cadastro"></content-header>
+
+<section class="content">
+  <div class="nav-tabs-custom" ng-controller="PedidosCtrl as pCtrl">
+    <ul class="nav nav-tabs">
+      <li ng-if="pCtrl.tabList" ng-class="{active: pCtrl.tabList}">
+        <a href data-target="#tabList" data-toggle="tab">
+          <i class="fa fa-bars"></i> Lista
+        </a>
+      </li>
+      <li ng-if="pCtrl.tabCreate" ng-class="{active: pCtrl.tabUpdate}">
+        <a href data-target="#tabCreate" data-toggle="tab"  ng-class="{active: pCtrl.tabCreate}">
+          <i class="fa fa-plus"></i> Incluir
+        </a>
+      </li>
+      <li ng-if="pCtrl.tabUpdate" ng-class="{active: pCtrl.tabUpdate}">
+        <a href data-target="#tabUpdate" data-toggle="tab">
+          <i class="fa fa-pencil"></i> Alterar
+        </a>
+      </li>
+      <li ng-if="pCtrl.tabCancel" ng-class="{active: pCtrl.tabCancel}">
+        <a href data-target="#tabCancel" data-toggle="tab" ng-class="{active: pCtrl.tabCancel}">
+          <i class="fa fa-trash-o"></i> Cancelar
+        </a>
+      </li>
+      <li ng-if="pCtrl.tabTicket" class="no-print" ng-class="{active: pCtrl.tabTicket}">
+        <a href data-target="#tabTicket" data-toggle="tab" ng-class="{active: pCtrl.tabTicket}">
+          <i class="fa fa-ticket"></i> Ticket
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane" id="tabList" ng-include="'pedido/list.html'" ng-class="{active: pCtrl.tabList}" ng-if="pCtrl.tabList"></div>
+      <div class="tab-pane" id="tabCreate" ng-include="'pedido/form.html'" ng-if="pCtrl.tabCreate"></div>
+      <div class="tab-pane" id="tabUpdate" ng-include="'pedido/form.html'" ng-class="{active: pCtrl.tabUpdate}" ng-if="pCtrl.tabUpdate"></div>
+      <div class="tab-pane" id="tabCancel" ng-include="'pedido/form.html'" ng-class="{active: pCtrl.tabCancel}" ng-if="pCtrl.tabCancel"></div>
+      <div class="tab-pane" id="tabTicket" ng-include="'pedido/ticket.html'" ng-class="{active: pCtrl.tabTicket}" ng-if="pCtrl.tabTicket"></div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,33 @@
+{
+  "name": "PedidosApp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "loader.js",
+  "scripts": {
+    "dev": "nodemon loader.js",
+    "production": "pm2 start loader.js --name backend"
+  },
+  "author": "Rafael Criado",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "express-query-int": "^2.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.13.4",
+    "mongoose-paginate": "^5.0.3",
+    "mongoose-schema-formatdate": "^1.0.0",
+    "multer": "^1.4.2",
+    "node-restful": "^0.2.6",
+    "pm2": "^2.7.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Garagemi9Lab/pedidosApp.git"
+  }
+}

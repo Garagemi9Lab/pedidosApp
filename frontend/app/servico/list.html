@@ -1,0 +1,35 @@
+<div class="box-body">
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Peça</th>
+          <th>Serviço</th>
+          <th>Grupo</th>
+          <th>Valor</th>
+          <th>Pontos</th>
+          <th>Última alteração</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="servico in sCtrl.servicos">
+          <td>{{:: servico.peca }}</td>
+          <td>{{:: servico.descricao }}</td>
+          <td>{{:: servico.grupo }}</td>
+          <td>{{:: servico.valor | currency : 'R$ ' : 2}}</td>
+          <td>{{:: servico.pontos }}</td>
+          <td>{{:: servico.ultAlteracao | date : 'dd/MM/yyyy'}}</td>
+          <td class="table-actions">
+            <button class="btn btn-warning" ng-click="sCtrl.showTabUpdate(servico)">
+              <i class="fa fa-pencil"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box-footer clearfix">
+    <paginator url="/#!/servicos" pages="{{ sCtrl.pages }}"></paginator>
+  </div>
+</div>
