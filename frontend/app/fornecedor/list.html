@@ -1,0 +1,167 @@
+<div class="box-body">
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>CPF</th>
+          <th>Nome</th>
+          <th>E-mail</th>
+          <th>Telefone</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="fornecedor in fCtrl.fornecedores | orderBy:'nome'">
+          <td>{{:: fornecedor.codigo }}</td>
+          <td>{{:: fornecedor.cpf }}</td>
+          <td>{{:: fornecedor.nome }}</td>
+          <td>{{:: fornecedor.email }}</td>
+          <td>{{:: fornecedor.telefone }}</td>
+          <td class="table-actions">
+            <button
+              class="btn btn-warning"
+              ng-click="fCtrl.showTabUpdate(fornecedor)"
+            >
+              <i class="fa fa-pencil"></i>
+            </button>
+
+            <button
+              class="btn btn-info"
+              title="Produtos"
+              data-toggle="modal"
+              data-target="#modalProdutos"
+              ng-click="fCtrl.showProdutos(fornecedor)"
+            >
+              <i class="fa fa-black-tie"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box-footer clearfix">
+    <paginator url="/#!/fornecedores" pages="{{ fCtrl.pages }}"></paginator>
+  </div>
+</div>
+
+<!-- Inicio da modal -->
+<div
+  class="modal fade"
+  id="modalProdutos"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="modalProdutosLabel"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="modalProdutosLabel">
+          Produtos de {{ fCtrl.fornecedor.nome }} ({{ fCtrl.fornecedor.email }})
+        </h4>
+      </div>
+      <div class="modal-body">
+        <button
+          class="btn btn-info btn-sm"
+          style="margin-bottom: 5px"
+          title="Adicionar Produto"
+          data-toggle="modal"
+          data-target="#modalAddProduto"
+        >
+          <i class="fa fa-plus"></i> Produtos
+        </button>
+        <div class="table-responsive">
+          <table class="table" ng-if="fCtrl.produtos">
+            <th>#</th>
+            <th>Titulo</th>
+            <th>Cor</th>
+            <th>Marca</th>
+            <th>Tamanho</th>
+            <th>Valor</th>
+            <th></th>
+            <tr ng-repeat="produto in fCtrl.produtos">
+              <td>{{ produto.codigo }}</td>
+              <td>{{ produto.titulo }}</td>
+              <td>{{ produto.cor }}</td>
+              <td>{{ produto.marca }}</td>
+              <td>{{ produto.tamanho }}</td>
+              <td>{{ produto.valor | currency: "R$ ":2 }}</td>
+              <td>
+                <button
+                  class="btn btn-success"
+                  ng-disabled="fCtrl.tabDelete"
+                  ng-click="fCtrl.addItemProduto(produto)"
+                  ng-show="fCtrl.statusItem == 'NOVO'"
+                  data-dismiss="modal"
+                >
+                  <i class="fa fa-plus"></i>
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fim da modal-->
+
+<!-- Inicio da modal adicionar produto -->
+<div
+  class="modal fade"
+  id="modalAddProduto"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="modalAddProdutolLabel"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="modalAddProdutolLabel">
+          Novo produto de {{ fCtrl.fornecedor.nome }} ({{
+            fCtrl.fornecedor.email
+          }})
+        </h4>
+      </div>
+      <div
+        class="modal-body"
+        ng-include="'fornecedor/formModalProduto.html'"
+      ></div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          ng-click="fCtrl.createProduto()"
+        >
+          Incluir
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fim da modal-->

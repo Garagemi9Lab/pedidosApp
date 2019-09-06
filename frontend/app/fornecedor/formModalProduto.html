@@ -1,0 +1,94 @@
+<div role="form">
+  <fieldset>
+    <div class="box-body">
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-yellow"><i class="fa fa-key"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Código</span>
+            <span class="info-box-number">{{ fCtrl.novoProduto.codigo }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-aqua"
+            ><i class="fa fa-pencil-square-o"></i
+          ></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Título</span>
+            <span class="info-box-number">{{ fCtrl.novoProduto.titulo }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box-body">
+      <field
+        id="titulo"
+        label="Título"
+        grid="12 6 6"
+        type="text"
+        model="fCtrl.novoProduto.titulo"
+      ></field>
+      <field
+        id="produto"
+        label="Descrição"
+        grid="12 6 6"
+        type="text"
+        model="fCtrl.novoProduto.descricao"
+      ></field>
+      <field
+        id="tipo"
+        label="Tipo"
+        grid="12 6 6"
+        type="text"
+        model="fCtrl.novoProduto.tipo"
+      ></field>
+      <field
+        id="marca"
+        label="Marca"
+        grid="12 6 6"
+        type="text"
+        model="fCtrl.novoProduto.marca"
+      ></field>
+      <field
+        id="tamanho"
+        label="Tamanho"
+        grid="12 6 6"
+        type="text"
+        model="fCtrl.novoProduto.tamanho"
+      ></field>
+      <field
+        id="cor"
+        label="Cor"
+        grid="12 6 6"
+        type="text"
+        model="fCtrl.novoProduto.cor"
+      ></field>
+      <field
+        id="valor"
+        label="Valor"
+        grid="12 6 6"
+        type="Number"
+        model="fCtrl.novoProduto.valor"
+      ></field>
+      <field
+        id="pontos"
+        label="Pontos"
+        grid="12 6 6"
+        type="Number"
+        model="fCtrl.novoProduto.pontos"
+      ></field>
+
+      <field
+        id="percentualConsignado"
+        label="% Consignado"
+        grid="12 6 6"
+        type="Number"
+        model="fCtrl.novoProduto.percentualConsignado"
+      ></field>
+    </div>
+  </fieldset>
+</div>

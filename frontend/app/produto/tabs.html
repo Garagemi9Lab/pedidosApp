@@ -1,0 +1,50 @@
+<content-header name="Produtos" small="Cadastro"></content-header>
+
+<section class="content">
+  <div class="nav-tabs-custom" ng-controller="ProdutosCtrl as pCtrl">
+    <ul class="nav nav-tabs">
+      <li ng-if="pCtrl.tabList" ng-class="{active: pCtrl.tabList}">
+        <a href data-target="#tabList" data-toggle="tab">
+          <i class="fa fa-bars"></i> Lista
+        </a>
+      </li>
+      <li ng-if="pCtrl.tabCreate" ng-class="{active: pCtrl.tabUpdate}">
+        <a
+          href
+          data-target="#tabCreate"
+          data-toggle="tab"
+          ng-class="{active: pCtrl.tabCreate}"
+        >
+          <i class="fa fa-plus"></i> Incluir
+        </a>
+      </li>
+      <li ng-if="pCtrl.tabUpdate" ng-class="{active: pCtrl.tabUpdate}">
+        <a href data-target="#tabUpdate" data-toggle="tab">
+          <i class="fa fa-pencil"></i> Alterar
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div
+        class="tab-pane"
+        id="tabList"
+        ng-include="'produto/list.html'"
+        ng-class="{active: pCtrl.tabList}"
+        ng-if="pCtrl.tabList"
+      ></div>
+      <div
+        class="tab-pane"
+        id="tabCreate"
+        ng-include="'produto/form.html'"
+        ng-if="pCtrl.tabCreate"
+      ></div>
+      <div
+        class="tab-pane"
+        id="tabUpdate"
+        ng-include="'produto/form.html'"
+        ng-class="{active: pCtrl.tabUpdate}"
+        ng-if="pCtrl.tabUpdate"
+      ></div>
+    </div>
+  </div>
+</section>

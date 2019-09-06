@@ -1,0 +1,41 @@
+<div class="box-body">
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Produto</th>
+          <th>Valor</th>
+          <th>Marca</th>
+          <th>Proprietário</th>
+          <th>Última alteração</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="produto in pCtrl.produtos">
+          <td>{{:: produto.titulo }}</td>
+          <td>{{:: produto.descricao }}</td>
+          <td>{{:: produto.valor | currency : 'R$ ' : 2}}</td>
+          <td>{{:: produto.marca }}</td>
+          <td>
+            {{:: produto.cliente.nome.split(' ')[0] }}
+            <small>{{:: produto.cliente.telefone }}</small>
+          </td>
+          <td>{{:: produto.ultAlteracao | date : 'dd/MM/yyyy'}}</td>
+          <td class="table-actions">
+            <button
+              class="btn btn-warning"
+              ng-click="pCtrl.showTabUpdate(produto)"
+            >
+              <i class="fa fa-pencil"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box-footer clearfix">
+    <paginator url="/#!/produtos" pages="{{ pCtrl.pages }}"></paginator>
+  </div>
+</div>

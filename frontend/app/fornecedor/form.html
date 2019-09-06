@@ -1,0 +1,126 @@
+<div role="form">
+  <fieldset>
+    <div class="box-body">
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-red"><i class="fa fa-key"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Código</span>
+            <span class="info-box-number">{{ fCtrl.fornecedor.codigo }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-aqua"
+            ><i class="fa fa-id-card-o"></i
+          ></span>
+          <div class="info-box-content">
+            <span class="info-box-text">CPF</span>
+            <span class="info-box-number">{{ fCtrl.fornecedor.cpf }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-green"><i class="fa fa-user"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Nome</span>
+            <span class="info-box-number">{{ fCtrl.fornecedor.nome }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box-body">
+      <field
+        id="cpf"
+        label="Cpf"
+        grid="12 6 4"
+        type="text"
+        model="fCtrl.fornecedor.cpf"
+      ></field>
+      <field
+        id="nome"
+        label="Nome"
+        grid="12 6 4"
+        type="text"
+        model="fCtrl.fornecedor.nome"
+      ></field>
+      <field
+        id="telefone"
+        label="Telefone"
+        grid="12 6 4"
+        type="text"
+        model="fCtrl.fornecedor.telefone"
+      ></field>
+      <field
+        id="celular"
+        label="Celular"
+        grid="12 6 4"
+        type="text"
+        model="fCtrl.fornecedor.celular"
+      ></field>
+      <field
+        id="email"
+        label="E-mail"
+        grid="12 6 4"
+        type="email"
+        model="fCtrl.fornecedor.email"
+      ></field>
+    </div>
+
+    <div class="box-body">
+      <div class="col-xs-12">
+        <fieldset>
+          <legend>Dados Bancários</legend>
+          <div ng-include="'fornecedor/bankData.html'"></div>
+        </fieldset>
+      </div>
+      <div class="col-xs-12">
+        <fieldset>
+          <legend>Endereço</legend>
+          <div ng-include="'fornecedor/enderecoList.html'"></div>
+        </fieldset>
+      </div>
+      <!-- <div class="col-xs-12">
+        <fieldset>
+          <legend>Dependentes</legend>
+          <div ng-include="'fornecedor/dependentesList.html'"></div>
+        </fieldset>
+      </div>
+      <div class="col-xs-12">
+        <fieldset>
+          <legend>Créditos</legend>
+          <div ng-include="'fornecedor/creditosList.html'"></div>
+        </fieldset>
+      </div> -->
+    </div>
+  </fieldset>
+
+  <div class="box-footer">
+    <button
+      class="btn btn-primary"
+      ng-click="fCtrl.create()"
+      ng-if="fCtrl.tabCreate"
+    >
+      Incluir
+    </button>
+    <button
+      class="btn btn-info"
+      ng-if="fCtrl.tabUpdate && fCtrl.fornecedor.status != 'CANCELADO'"
+      ng-click="fCtrl.update()"
+    >
+      Alterar
+    </button>
+    <button
+      class="btn btn-danger"
+      ng-if="fCtrl.tabCancel"
+      ng-click="fCtrl.cancel()"
+    >
+      Cancelar fornecedor
+    </button>
+    <button class="btn btn-default" ng-click="fCtrl.refresh()">Voltar</button>
+  </div>
+</div>

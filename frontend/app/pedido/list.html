@@ -9,6 +9,7 @@
           <th>Valor</th>
           <th>Status</th>
           <th>Financeiro</th>
+          <th>Tipo</th>
           <th>Ações</th>
         </tr>
       </thead>
@@ -18,16 +19,43 @@
           <td>{{:: pedido.cliente[0].nome }}</td>
           <td>{{:: pedido.dataPedido | date : 'dd/MM/yyyy'}}</td>
           <td>{{:: pedido.financeiro.subTotal | currency : 'R$ ' : 2}}</td>
-          <td><span class="label" ng-class="{'label-danger':pedido.status == 'CANCELADO', 'label-warning': pedido.status == 'EM ABERTO', 'label-success':pedido.status == 'CONCLUÍDO'}">{{:: pedido.status }}</span></td>
-          <td><span class="label" ng-class="{'label-warning':pedido.financeiro.status == 'PENDENTE', 'label-success':pedido.financeiro.status == 'PAGO'}">{{:: pedido.financeiro.status }}</span></td>
+          <td>
+            <span
+              class="label"
+              ng-class="{'label-danger':pedido.status == 'CANCELADO', 'label-warning': pedido.status == 'EM ABERTO', 'label-success':pedido.status == 'CONCLUÍDO'}"
+              >{{:: pedido.status }}</span
+            >
+          </td>
+          <td>
+            <span
+              class="label"
+              ng-class="{'label-warning':pedido.financeiro.status == 'PENDENTE', 'label-success':pedido.financeiro.status == 'PAGO'}"
+              >{{:: pedido.financeiro.status }}</span
+            >
+          </td>
+          <td>{{:: pedido.tipo }}</td>
           <td class="table-actions">
-            <button class="btn" ng-class="{'btn-warning':pedido.status != 'CANCELADO', 'btn-primary':pedido.status == 'CANCELADO'}" ng-click="pCtrl.showTabUpdate(pedido)">
-              <i class="fa" ng-class="{'fa-pencil':pedido.status != 'CANCELADO', 'fa-eye':pedido.status == 'CANCELADO'}"></i>
+            <button
+              class="btn"
+              ng-class="{'btn-warning':pedido.status != 'CANCELADO', 'btn-primary':pedido.status == 'CANCELADO'}"
+              ng-click="pCtrl.showTabUpdate(pedido)"
+            >
+              <i
+                class="fa"
+                ng-class="{'fa-pencil':pedido.status != 'CANCELADO', 'fa-eye':pedido.status == 'CANCELADO'}"
+              ></i>
             </button>
-            <button class="btn btn-danger" ng-disabled="pedido.status == 'CANCELADO'" ng-click="pCtrl.showTabCancel(pedido)">
+            <button
+              class="btn btn-danger"
+              ng-disabled="pedido.status == 'CANCELADO'"
+              ng-click="pCtrl.showTabCancel(pedido)"
+            >
               <i class="fa fa-trash-o"></i>
             </button>
-            <button class="btn btn-success" ng-click="pCtrl.showTabTicket(pedido)">
+            <button
+              class="btn btn-success"
+              ng-click="pCtrl.showTabTicket(pedido)"
+            >
               <i class="fa fa-ticket"></i>
             </button>
           </td>
