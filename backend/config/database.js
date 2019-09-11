@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-module.exports = mongoose.connect("mongodb://localhost/db_pedidosapp");
+module.exports = mongoose.connect("mongodb://localhost:27018/db_pedidosapp");
 
 mongoose.Error.messages.general.required = "O atributo '{PATH}' é obrigatório";
 mongoose.Error.messages.Number.min =

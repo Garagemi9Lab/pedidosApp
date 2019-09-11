@@ -9,10 +9,10 @@ const dependenteSchema = new mongoose.Schema({
 
 const enderecoSchema = new mongoose.Schema({
   rua: { type: String },
-  numero: { type: Number },
+  numero: { type: String },
   complemento: { type: String },
   bairro: { type: String },
-  cep: { type: Number },
+  cep: { type: String },
   cidade: { type: String },
   uf: {
     type: String,
@@ -35,13 +35,19 @@ const creditoSchema = new mongoose.Schema({
   valor: { type: Number }
 });
 
+const bankDataSchema = new mongoose.Schema({
+  agency: { type: String },
+  account: { type: String },
+  bank: { type: String }
+});
+
 const clienteSchema = new mongoose.Schema({
-  codigo: { type: String, required: true }, //4 digitos
+  codigo: { type: String, required: false, unique: true }, //4 digitos
   nome: { type: String, required: true },
   telefone: { type: String, required: true },
   celular: { type: String },
   cpf: {
-    type: Number,
+    type: String,
     unique: true,
     validate: {
       validator: function(v) {
@@ -52,7 +58,16 @@ const clienteSchema = new mongoose.Schema({
   endereco: [enderecoSchema],
   email: { type: String },
   dependentes: [dependenteSchema],
-  creditos: { type: [creditoSchema], saldoCred: { type: Number, min: 0 } }
+  creditos: { type: [creditoSchema], saldoCred: { type: Number, min: 0 } },
+  bankData: { type: bankDataSchema, required: false },
+  tipo: [
+    {
+      type: String,
+      enum: ["customer", "provider"],
+      required: true,
+      default: "customer"
+    }
+  ]
 });
 
 module.exports = restful.model("Cliente", clienteSchema);

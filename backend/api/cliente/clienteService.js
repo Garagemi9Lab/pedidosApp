@@ -25,14 +25,4 @@ function parseErrors(nodeRestfulErrors) {
   return errors;
 }
 
-Cliente.route("count", (req, res, next) => {
-  Cliente.count((error, value) => {
-    if (error) {
-      res.status(500).json({ error: [error] });
-    } else {
-      res.json({ value });
-    }
-  });
-});
-
 module.exports = Cliente;

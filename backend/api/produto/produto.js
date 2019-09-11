@@ -8,7 +8,10 @@ const produtoSchema = new mongoose.Schema({
   titulo: { type: String, required: true },
   descricao: { type: String, required: true },
   quantidade: { type: Number, default: 1 },
-  grupo: { type: String, default: "ROUPAS" },
+  tipo: { type: String },
+  tamanho: { type: String },
+  cor: { type: String },
+  marca: { type: String },
   valor: { type: Number, default: 1.0 },
   percentualConsignado: { type: Number, required: true, default: 50 },
   pontos: { type: Number },
@@ -16,7 +19,7 @@ const produtoSchema = new mongoose.Schema({
   retiradaDate: { type: Date, default: Date.now },
   cliente: { type: mongoose.Schema.ObjectId, ref: cliente, required: true },
   createdAt: { type: Date, default: Date.now },
-  imagemId: { type: mongoose.Schema.ObjectId, ref: file, required: true }
+  imagemId: { type: mongoose.Schema.ObjectId, ref: file, required: false }
 });
 
 module.exports = restful.model("Produto", produtoSchema);

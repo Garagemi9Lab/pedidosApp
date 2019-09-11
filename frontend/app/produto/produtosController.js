@@ -20,7 +20,11 @@
         .then(function(response) {
           $http.get(`${url}/count`).then(function(response) {
             vm.pages = Math.ceil(response.data.value / 100);
-            tabs.show(vm, { tabList: true, tabCreate: true });
+            tabs.show(vm, {
+              tabList: true,
+              tabCreate: true,
+              tabEtiquetas: true
+            });
             vm.produto = {
               codigo: null
             };
@@ -36,7 +40,7 @@
 
     vm.create = function() {
       $http
-        .post(`${url}`, vm.produto)
+        .post(`${url}/create`, vm.produto)
         .then(function(response) {
           msgs.addSuccess("Operação realizada com sucesso!");
         })
@@ -90,7 +94,7 @@
     };
 
     vm.findCliente = function() {
-      const url = `http://localhost:3003/api/cliente`;
+      const url = `http://localhost:3003/api/provider`;
 
       if (vm.busca) {
         if (!isNaN(parseFloat(vm.busca)) && isFinite(vm.busca)) {

@@ -1,5 +1,6 @@
 const _ = require("lodash");
 const Produto = require("./produto");
+const Cliente = require("../cliente/cliente");
 
 Produto.methods(["get", "post", "put", "delete"]).updateOptions({
   new: true,
@@ -7,6 +8,18 @@ Produto.methods(["get", "post", "put", "delete"]).updateOptions({
 });
 
 Produto.after("post", sendErrorsOrNext).after("put", sendErrorsOrNext);
+
+/*Produto.after("get", (req, res, next) => {
+  Produto.populate({ path: "cliente", model: Cliente }).exec(
+    (error, produto) => {
+      if (error) {
+        res.status(500).json({ errors: [error] });
+      } else {
+        res.json(produto);
+      }
+    }
+  );
+});*/
 
 function sendErrorsOrNext(req, res, next) {
   const bundle = res.locals.bundle;
@@ -26,7 +39,7 @@ function parseErrors(nodeRestfulErrors) {
 }
 
 Produto.route("count", (req, res, next) => {
-  Servico.count((error, value) => {
+  Produto.count((error, value) => {
     if (error) {
       res.status(500).json({ error: [error] });
     } else {

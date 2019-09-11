@@ -18,7 +18,7 @@ module.exports = function(server) {
   router.post("/user", userController.store);
 
   //Rotas abaixo dessa linha precisam de token.
-  router.use(sessionController.authenticate);
+  //router.use(sessionController.authenticate);
 
   //Pedido
   const pedidoService = require("../api/pedido/pedidoService");
@@ -33,6 +33,10 @@ module.exports = function(server) {
 
   const clienteListaService = require("../api/cliente/clienteListaService");
   router.route("/cliente/byName").get(clienteListaService.getByName);
+  router.get("/cliente/list", clienteListaService.list);
+  router.get("/cliente/count", clienteListaService.count);
+  router.post("/cliente/store", clienteListaService.store);
+  router.put("/cliente/update/:id", clienteListaService.update);
 
   //Estoque
   const estoqueService = require("../api/estoque/estoqueService");
@@ -50,6 +54,11 @@ module.exports = function(server) {
   const produtoService = require("../api/produto/produtoService");
   produtoService.register(router, "/produto");
 
+  const produtoListaService = require("../api/produto/produtoListaService");
+  router.post("/produto/create", produtoListaService.store); //Cria o produto
+  router.get("/produto/lista", produtoListaService.allProdutos);
+  router.get("/produto/getProdutos", produtoListaService.getProdutos);
+
   //File
   const fileController = require("../api/files/fileController");
   router.post("/file", upload.single("file"), fileController.store);
@@ -58,4 +67,13 @@ module.exports = function(server) {
   router.route("/servico/getServicos").get(servicoListaService.getServicos);
   router.route("/servico/getPecas").get(servicoListaService.getPecas);
   router.route("/servico/getValor").get(servicoListaService.getValor);
+
+  const providerController = require("../api/fornecedor/fornecedorController");
+  router.get("/provider/list", providerController.list);
+  router.post("/provider/create", providerController.store);
+  router.get("/provider/count", providerController.count);
+  router.get("/provider/byName", providerController.getByName);
+  router.put("/provider/update/:id", providerController.update);
+  router.get("/provider/:codigo", providerController.findOne);
+  router.get("/provider/:codigo/produtos", providerController.getProdutos);
 };

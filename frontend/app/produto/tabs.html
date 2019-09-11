@@ -8,6 +8,7 @@
           <i class="fa fa-bars"></i> Lista
         </a>
       </li>
+
       <li ng-if="pCtrl.tabCreate" ng-class="{active: pCtrl.tabUpdate}">
         <a
           href
@@ -16,6 +17,17 @@
           ng-class="{active: pCtrl.tabCreate}"
         >
           <i class="fa fa-plus"></i> Incluir
+        </a>
+      </li>
+
+      <li ng-if="pCtrl.tabEtiquetas" ng-class="{active: pCtrl.tabUpdate}">
+        <a
+          href
+          data-target="#tabEtiquetas"
+          data-toggle="tab"
+          ng-class="{active: pCtrl.tabEtiquetas}"
+        >
+          <i class="fa fa-ticket"></i> Etiquetas
         </a>
       </li>
       <li ng-if="pCtrl.tabUpdate" ng-class="{active: pCtrl.tabUpdate}">
@@ -37,6 +49,13 @@
         id="tabCreate"
         ng-include="'produto/form.html'"
         ng-if="pCtrl.tabCreate"
+      ></div>
+
+      <div
+        class="tab-pane"
+        id="tabEtiquetas"
+        ng-include="'produto/form.html'"
+        ng-if="pCtrl.tabEtiquetas"
       ></div>
       <div
         class="tab-pane"

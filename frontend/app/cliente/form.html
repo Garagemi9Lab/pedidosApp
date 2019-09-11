@@ -3,7 +3,9 @@
     <div class="box-body">
       <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="info-box">
-          <span class="info-box-icon bg-aqua"><i class="fa fa-id-card-o"></i></span>
+          <span class="info-box-icon bg-aqua"
+            ><i class="fa fa-id-card-o"></i
+          ></span>
           <div class="info-box-content">
             <span class="info-box-text">CPF</span>
             <span class="info-box-number">{{ cCtrl.cliente.cpf }}</span>
@@ -23,11 +25,41 @@
     </div>
 
     <div class="box-body">
-      <field id="cpf" label="Cpf" grid="12 6 4" type="text" model="cCtrl.cliente.cpf"></field>
-      <field id="nome" label="Nome" grid="12 6 4" type="text" model="cCtrl.cliente.nome"></field>
-      <field id="telefone" label="Telefone" grid="12 6 4" type="text" model="cCtrl.cliente.telefone"></field>
-      <field id="celular" label="Celular" grid="12 6 4" type="text" model="cCtrl.cliente.celular"></field>
-      <field id="email" label="E-mail" grid="12 6 4" type="email" model="cCtrl.cliente.email"></field>
+      <field
+        id="cpf"
+        label="Cpf"
+        grid="12 6 4"
+        type="text"
+        model="cCtrl.cliente.cpf"
+      ></field>
+      <field
+        id="nome"
+        label="Nome"
+        grid="12 6 4"
+        type="text"
+        model="cCtrl.cliente.nome"
+      ></field>
+      <field
+        id="telefone"
+        label="Telefone"
+        grid="12 6 4"
+        type="text"
+        model="cCtrl.cliente.telefone"
+      ></field>
+      <field
+        id="celular"
+        label="Celular"
+        grid="12 6 4"
+        type="text"
+        model="cCtrl.cliente.celular"
+      ></field>
+      <field
+        id="email"
+        label="E-mail"
+        grid="12 6 4"
+        type="email"
+        model="cCtrl.cliente.email"
+      ></field>
     </div>
 
     <div class="box-body">
@@ -37,6 +69,26 @@
           <div ng-include="'cliente/enderecoList.html'"></div>
         </fieldset>
       </div>
+
+      <div
+        class="col-xs-12"
+        ng-if="cCtrl.tabUpdate && cCtrl.cliente.status != 'CANCELADO'"
+      >
+        <fieldset>
+          <legend>Fornecedor</legend>
+          <div class="col-xs-12">
+            <div class="form-group">
+              <button
+                class="btn btn-warning"
+                ng-click="cCtrl.updateFornecedor()"
+              >
+                Adicionar cliente como fornecedor
+              </button>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
       <!-- <div class="col-xs-12">
         <fieldset>
           <legend>Dependentes</legend>
@@ -52,11 +104,28 @@
     </div>
   </fieldset>
 
-
   <div class="box-footer">
-    <button class="btn btn-primary" ng-click="cCtrl.create()" ng-if="cCtrl.tabCreate">Incluir</button>
-    <button class="btn btn-info" ng-if="cCtrl.tabUpdate && cCtrl.cliente.status != 'CANCELADO'" ng-click="cCtrl.update()">Alterar</button>
-    <button class="btn btn-danger" ng-if="cCtrl.tabCancel" ng-click="cCtrl.cancel()">Cancelar cliente</button>
+    <button
+      class="btn btn-primary"
+      ng-click="cCtrl.create()"
+      ng-if="cCtrl.tabCreate"
+    >
+      Incluir
+    </button>
+    <button
+      class="btn btn-info"
+      ng-if="cCtrl.tabUpdate && cCtrl.cliente.status != 'CANCELADO'"
+      ng-click="cCtrl.update()"
+    >
+      Alterar
+    </button>
+    <button
+      class="btn btn-danger"
+      ng-if="cCtrl.tabCancel"
+      ng-click="cCtrl.cancel()"
+    >
+      Cancelar cliente
+    </button>
     <button class="btn btn-default" ng-click="cCtrl.refresh()">Voltar</button>
   </div>
 </div>

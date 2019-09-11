@@ -137,15 +137,14 @@
       if (!vm.novoProduto) {
         vm.novoProduto = {};
       }
-      vm.novoProduto.codigo = vm.produtos.length + 10;
+      vm.novoProduto.codigo = null;
       vm.novoProduto.cliente = vm.fornecedor;
-      console.log(vm.novoProduto);
       $http
-        .post(`http://localhost:3003/api/produto`, vm.novoProduto)
+        .post(`http://localhost:3003/api/produto/create`, vm.novoProduto)
         .then(function(response) {
           msgs.addSuccess("Operação realizada com sucesso!");
-          console.log(response.data);
           vm.produtos.push(response.data);
+          vm.novoProduto = reponse.data;
         })
         .catch(function(response) {
           msgs.addError(response.data.errors);

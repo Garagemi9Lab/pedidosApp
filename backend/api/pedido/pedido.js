@@ -27,7 +27,7 @@ const financeiroSchema = new mongoose.Schema({
 });
 
 const itemSchema = new mongoose.Schema({
-  peca: { type: String, required: true },
+  peca: { type: String, required: false },
   servicos: [
     {
       descricao: { type: String, required: true },
@@ -39,6 +39,9 @@ const itemSchema = new mongoose.Schema({
   statusItem: { type: String, enum: ["PENDENTE", "CONCLUÍDO"] },
   valorTotal: { type: Number, required: true, min: 0 },
   marca: { type: String },
+  codigo: { type: String },
+  titulo: { type: String },
+  cor: { type: String },
   dataEntrega: { type: Date, required: true }
 });
 
