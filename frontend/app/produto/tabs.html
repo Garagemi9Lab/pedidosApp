@@ -20,7 +20,7 @@
         </a>
       </li>
 
-      <li ng-if="pCtrl.tabEtiquetas" ng-class="{active: pCtrl.tabUpdate}">
+      <li ng-class="{active: pCtrl.tabEtiquetas}">
         <a
           href
           data-target="#tabEtiquetas"
@@ -54,8 +54,7 @@
       <div
         class="tab-pane"
         id="tabEtiquetas"
-        ng-include="'produto/form.html'"
-        ng-if="pCtrl.tabEtiquetas"
+        ng-include="'produto/etiquetas.html'"
       ></div>
       <div
         class="tab-pane"

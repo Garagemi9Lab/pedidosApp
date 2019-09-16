@@ -76,4 +76,7 @@ module.exports = function(server) {
   router.put("/provider/update/:id", providerController.update);
   router.get("/provider/:codigo", providerController.findOne);
   router.get("/provider/:codigo/produtos", providerController.getProdutos);
+
+  const etiquetaController = require("../api/etiqueta/etiquetaController");
+  router.get("/ticket/store", etiquetaController.store);
 };
