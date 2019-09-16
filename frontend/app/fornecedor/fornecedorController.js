@@ -42,6 +42,14 @@
         });
       }
     };
+    vm.buscaCliente = function() {
+      if (vm.busca) {
+        $http.get(`${url}/byname?nome=${vm.busca}`).then(function(response) {
+          vm.fornecedores = response.data;
+          vm.pages = Math.ceil(response.data.value / 10);
+        });
+      }
+    };
 
     vm.getByCep = function() {
       if (vm.endereco.cep && vm.endereco.cep.toString().length == 8) {

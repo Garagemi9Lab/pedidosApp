@@ -1,4 +1,30 @@
 <div class="box-body">
+  <div class="row">
+    <div class="col-xs-4 px-3 pb-0 pt-1">
+      <div class="sidebar-form buscab mb-0">
+        <div class="input-group">
+          <input
+            type="text"
+            name="q"
+            class="form-control"
+            style="background-color: #fff !important"
+            placeholder="Pesquise pelo nome..."
+            ng-model="fCtrl.busca"
+            ng-enter="fCtrl.buscaCliente()"
+          />
+          <span class="input-group-btn">
+            <button
+              type="submit"
+              ng-click="fCtrl.buscaCliente()"
+              class="btn btn-flat busca"
+            >
+              <i class="fa fa-search"></i>
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="table-responsive">
     <table class="table">
       <thead>

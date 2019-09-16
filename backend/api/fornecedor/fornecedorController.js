@@ -90,20 +90,19 @@ class FornecedorController {
 
   async getByName(req, res) {
     try {
-      await Provider.find(
-        {
-          nome: new RegExp(req.query.nome, "i"),
-          tipo: ["provider"]
-        },
-        (error, result) => {
-          if (error) {
-            res.status(500).json({ errors: [error] });
-          } else {
-            res.json(result);
-          }
-        }
-      );
+      const providers = await Provider.find()
+        .where({
+          nome: new RegExp(req.query.nome, "i")
+        })
+        .or([
+          { tipo: ["provider"] },
+          { tipo: ["customer", "provider"] },
+          { tipo: ["provider", "customer"] }
+        ]);
+
+      return res.json(providers);
     } catch (error) {
+      console.log(error);
       return res.status(500).json({ error: "Search providers failed" });
     }
   }
