@@ -2,6 +2,7 @@ const PDFDocument = require("pdfkit");
 const fs = require("fs");
 const { resolve } = require("path");
 const { createCanvas } = require("canvas");
+const http = require("http");
 
 const JsBarcode = require("jsbarcode");
 
@@ -70,14 +71,15 @@ class etiquetaController {
         _generateEtiqueta(pdf, produto, index);
       });
 
-      await pdf.pipe(fs.createWriteStream(`${caminho}/etiquetas.pdf`));
-      res.setHeader(
-        "Content-disposition",
-        'attachment; filename="' + `etiquetas.pdf` + '"'
+      const writeStream = await fs.createWriteStream(
+        `${caminho}/etiquetas.pdf`
       );
-      res.setHeader("Content-type", "application/pdf");
-      await pdf.end();
-      res.json();
+      pdf.pipe(writeStream);
+      pdf.end();
+      writeStream.on("finish", function() {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        return res.download(`${caminho}/etiquetas.pdf`);
+      });
     } catch (error) {
       console.log(error);
       return res.status(400).json({ error });
