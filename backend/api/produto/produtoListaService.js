@@ -6,8 +6,8 @@ async function store(req, res) {
   try {
     const campos = req.body;
 
-    let prodsFornecedorCount =
-      (await Produto.find({ cliente: campos.cliente })).length + 1;
+    let prodsFornecedorCount = (await Produto.find({ cliente: campos.cliente }))
+      .length;
 
     //Coloca 0 a esquerda
     let codigoCliente = String(("0000" + campos.cliente.codigo).slice(-4));

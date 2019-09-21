@@ -1,10 +1,10 @@
+const Produto = require("../produto/produto");
 const PDFDocument = require("pdfkit");
-const fs = require("fs");
+const stream = require("../../libs/stream");
 const { resolve } = require("path");
-const { createCanvas } = require("canvas");
-const http = require("http");
-
-const JsBarcode = require("jsbarcode");
+const fs = require("fs");
+//const { createCanvas } = require("canvas");
+//const JsBarcode = require("jsbarcode");
 
 const paper = {
   paperSize: [80, 279.4],
@@ -15,58 +15,45 @@ const paper = {
     right: 2
   }
 };
-const produtos = [
-  {
-    codigo: "1.0001",
-    descricao: "Descrição do produto X",
-    marca: "Marca do produto",
-    cor: "Amarelo",
-    tamanho: "G",
-    valor: "10,00"
-  },
-  {
-    codigo: "1.0002",
-    descricao: "Descrição do produto X",
-    marca: "Marca do produto",
-    cor: "Laranja",
-    tamanho: "G",
-    valor: "150,00"
-  },
-  {
-    codigo: "1.0003",
-    descricao: "Descrição do produto X",
-    marca: "Marca do produto",
-    cor: "Preto",
-    tamanho: "XXG2",
-    valor: "65,99"
-  }
-];
-function _generateBarCode(text) {
+
+/*function _generateBarCode(text) {
   let canvas = createCanvas();
   JsBarcode(canvas, text, { format: "CODE39" });
   return canvas.toDataURL("image/png");
-}
+}*/
 
 function _generateEtiqueta(documentPdf, produto, nEtiqueta) {
-  altura = Number(nEtiqueta) * 80 + 5;
-  documentPdf.fontSize(10).text(`${produto.descricao}`, 5, altura);
-  documentPdf.image(_generateBarCode(`${produto.codigo}`), 130, altura - 5, {
+  altura = Number(nEtiqueta) * 90 + 5;
+  documentPdf.fontSize(10).text(`código: ${produto.codigo}`, 5, altura);
+  documentPdf.fontSize(10).text(`${produto.titulo} - ${produto.descricao}`);
+  /*documentPdf.image(_generateBarCode(`${produto.codigo}`), 130, altura - 5, {
     width: 120
-  });
-  documentPdf.text(`M: ${produto.marca}`);
-  documentPdf.text(`C:${produto.cor} - T: ${produto.tamanho}`);
-  documentPdf.fontSize(25).text(`R$ ${produto.valor}`);
+  });*/
+  documentPdf.text(`marca: ${produto.marca}`);
+  documentPdf.text(`cor: ${produto.cor}`);
+  documentPdf.text(`tamanho: ${produto.tamanho}`);
+  let val = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+  }).format(produto.valor);
+  documentPdf.fontSize(25).text(`${val}`);
 }
 
 class etiquetaController {
   async store(req, res) {
     try {
+      //Consultar produtos
+      const listEtiquetas = req.body.produto.map(etiqueta => {
+        return { _id: etiqueta };
+      });
+
       const caminho = resolve(__dirname, "..", "..", "tmp", "pdfs");
       const pdf = new PDFDocument({
         size: paper.Size,
         margins: paper.paperMargins
       });
 
+      const produtos = await Produto.find({ $or: listEtiquetas });
       produtos.forEach((produto, index) => {
         _generateEtiqueta(pdf, produto, index);
       });
@@ -75,11 +62,15 @@ class etiquetaController {
         `${caminho}/etiquetas.pdf`
       );
       pdf.pipe(writeStream);
+      pdf.pipe(res);
       pdf.end();
-      writeStream.on("finish", function() {
+      /*await writeStream.on("finish", function() {
+        let arquivoPdf = `${caminho}/etiquetas.pdf`;
         res.setHeader("Access-Control-Allow-Origin", "*");
-        return res.download(`${caminho}/etiquetas.pdf`);
-      });
+        res.setHeader("Content-type", "application/pdf");
+        return res.download(arquivoPdf);
+        
+      });*/
     } catch (error) {
       console.log(error);
       return res.status(400).json({ error });

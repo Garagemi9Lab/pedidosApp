@@ -49,6 +49,46 @@
         });
     };
 
+    vm.listEtiquetas = [];
+
+    vm.addProdList = function(produtoId) {
+      let index = vm.listEtiquetas.findIndex(item => item == produtoId);
+      if (index < 0) {
+        vm.listEtiquetas.push(produtoId);
+      } else {
+        vm.listEtiquetas.splice(index, 1);
+      }
+    };
+
+    vm.gerarEtiquetas = function() {
+      let etiquetas = vm.listEtiquetas;
+      let urlEtiquetas = `${url}/etiquetas`;
+      console.log({ produto: etiquetas });
+      $http
+        .post(
+          urlEtiquetas,
+          { produto: etiquetas },
+          { responseType: "arraybuffer" }
+        )
+        .then(function(response) {
+          console.log(response.data);
+          var file = new Blob([response.data], { type: "application/pdf" });
+          var fileURL = window.URL.createObjectURL(file);
+          var fileName = `etiquetas-${new Date()}.pdf`;
+          var a = document.createElement("a");
+          document.body.appendChild(a);
+          a.style = "display: none";
+          a.href = fileURL;
+          a.download = fileName;
+          a.click();
+          vm.refresh();
+          msgs.addSuccess("Operação realizada com sucesso!");
+        })
+        .catch(function(response) {
+          msgs.addError(response.data.errors);
+        });
+    };
+
     vm.update = function() {
       const updateUrl = `${url}/${vm.produto._id}`;
       $http

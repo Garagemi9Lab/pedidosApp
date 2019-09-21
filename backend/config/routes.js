@@ -78,5 +78,8 @@ module.exports = function(server) {
   router.get("/provider/:codigo/produtos", providerController.getProdutos);
 
   const etiquetaController = require("../api/etiqueta/etiquetaController");
-  router.get("/ticket/store", etiquetaController.store);
+  router.post("/produto/etiquetas", etiquetaController.store);
+
+  const contaPagarController = require("../api/financeiro/contas_pagar/contaPagarController");
+  router.post("/financeiro/contas-a-pagar", contaPagarController.store);
 };

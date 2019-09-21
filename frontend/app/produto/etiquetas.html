@@ -1,8 +1,14 @@
 <div class="box-body">
   <div class="row">
-    <div class="col-xs-12">
-      <button class="btn btn-info">Gerar Etiquetas</button>
+    <div class="col-xs-12" style="margin-bottom: 10px;">
+      <button class="btn btn-info" ng-click="pCtrl.gerarEtiquetas()">
+        Gerar Etiquetas
+      </button>
     </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12"></div>
   </div>
   <div class="table-responsive">
     <table class="table">
@@ -21,7 +27,12 @@
       <tbody>
         <tr ng-repeat="produto in pCtrl.produtos">
           <td>
-            <input type="checkbox" name="etiqueta" id="{{:: produto.codigo}}" />
+            <input
+              type="checkbox"
+              name="etiqueta"
+              ng-click="pCtrl.addProdList(produto._id)"
+              id="{{:: produto.codigo}}"
+            />
           </td>
           <td>{{:: produto.codigo }}</td>
           <td>{{:: produto.titulo }}</td>
