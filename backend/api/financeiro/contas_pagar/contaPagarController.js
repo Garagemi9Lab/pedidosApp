@@ -36,6 +36,7 @@ class contaPagarController {
       //Cria conta-a-pagar
       const contaApagar = await ContaPagar.create({
         fornecedor,
+        produto,
         descricao,
         data_emissao,
         valor,
