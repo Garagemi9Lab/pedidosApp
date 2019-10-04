@@ -50,11 +50,19 @@ class etiquetaController {
       const caminho = resolve(__dirname, "..", "..", "tmp", "pdfs");
       const pdf = new PDFDocument({
         size: paper.Size,
-        margins: paper.paperMargins
+        margins: paper.paperMargins,
+        autoFirstPage: false
       });
 
       const produtos = await Produto.find({ $or: listEtiquetas });
       produtos.forEach((produto, index) => {
+        if (index % 8 == 0) {
+          pdf.addPage({
+            size: paper.Size,
+            margins: paper.paperMargins
+          });
+        }
+        console.log(index);
         _generateEtiqueta(pdf, produto, index);
       });
 

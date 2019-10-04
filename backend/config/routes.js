@@ -82,4 +82,17 @@ module.exports = function(server) {
 
   const contaPagarController = require("../api/financeiro/contas_pagar/contaPagarController");
   router.post("/financeiro/contas-a-pagar", contaPagarController.store);
+  router.get("/financeiro/contas-a-pagar/list", contaPagarController.list);
+  router.get(
+    "/financeiro/contas-a-pagar/detail/:id",
+    contaPagarController.findOne
+  );
+  router.get(
+    "/financeiro/contas-a-pagar/fornecedor/:id",
+    contaPagarController.getFornecedor
+  );
+  router.post(
+    "/financeiro/contas-a-pagar/quitar/parcela/:id",
+    contaPagarController.quitarParcela
+  );
 };

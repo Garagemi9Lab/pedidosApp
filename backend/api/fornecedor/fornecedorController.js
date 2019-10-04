@@ -56,12 +56,13 @@ class FornecedorController {
 
   async update(req, res) {
     try {
+      const { __v, ...data } = req.body;
+
+      console.log(data);
       const provider = await Provider.findOneAndUpdate(
         { _id: req.params.id },
-        req.body,
-        {
-          upsert: true
-        }
+        data,
+        { upsert: true }
       );
 
       return res.json(provider);

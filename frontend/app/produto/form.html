@@ -17,7 +17,7 @@
             ><i class="fa fa-pencil-square-o"></i
           ></span>
           <div class="info-box-content">
-            <span class="info-box-text">Título</span>
+            <span class="info-box-text">Peça</span>
             <span class="info-box-number">{{ pCtrl.produto.titulo }}</span>
           </div>
         </div>
@@ -154,7 +154,6 @@
                     <th>Bairro</th>
                     <th>Cidade</th>
                     <th>UF</th>
-                    <th>Tipo</th>
                     <th>Selecionar</th>
                   </tr>
                 </thead>
@@ -167,7 +166,6 @@
                     <td>{{ endereco.bairro }}</td>
                     <td>{{ endereco.cidade }}</td>
                     <td>{{ endereco.uf }}</td>
-                    <td>{{ endereco.tipo }}</td>
                     <td class="table-actions">
                       <button
                         class="btn btn-success btn-sm"
@@ -208,7 +206,7 @@
           <legend>Dados do Produto</legend>
           <field
             id="titulo"
-            label="Título"
+            label="Peça"
             grid="12 6 6"
             type="text"
             model="pCtrl.produto.titulo"
@@ -220,13 +218,7 @@
             type="text"
             model="pCtrl.produto.descricao"
           ></field>
-          <field
-            id="tipo"
-            label="Tipo"
-            grid="12 6 6"
-            type="text"
-            model="pCtrl.produto.tipo"
-          ></field>
+
           <field
             id="marca"
             label="Marca"

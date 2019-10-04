@@ -141,6 +141,13 @@
         });
     };
 
+    vm.limparForm = function(){
+      if (!vm.novoProduto) {
+        vm.novoProduto = {};
+      }
+      vm.novoProduto = null;
+    }
+
     vm.createProduto = function() {
       if (!vm.novoProduto) {
         vm.novoProduto = {};

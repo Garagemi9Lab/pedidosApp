@@ -52,8 +52,8 @@ class contaPagarController {
 
   async list(req, res) {
     try {
-      const providers = await Provider.find(filter);
-      return res.json(providers);
+      const contasPagar = await ContaPagar.find();
+      return res.json(contasPagar);
     } catch (error) {
       return res.status(500).json({ error });
     }
@@ -61,14 +61,14 @@ class contaPagarController {
 
   async findOne(req, res) {
     try {
-      const provider = await Provider.findOne({ codigo: req.params.codigo });
-      if (!provider) {
-        return res.status(400).json({ error: "Provider not found" });
+      const contaPagar = await ContaPagar.findOne({ _id: req.params.id });
+      if (!contaPagar) {
+        return res.status(400).json({ error: "Contas a pagar not found" });
       }
 
-      return res.json(provider);
+      return res.json(contaPagar);
     } catch (error) {
-      return res.status(500).json({ error: "Find provider failed" });
+      return res.status(500).json({ error: "Find contas a pagar failed" });
     }
   }
 
@@ -98,40 +98,60 @@ class contaPagarController {
     }
   }
 
-  async getProdutos(req, res) {
+  async getFornecedor(req, res) {
     try {
-      const fornecedor = await Provider.findOne({ _id: req.params.codigo });
+      const contasPagar = await ContaPagar.find({
+        fornecedor: req.params.id
+      });
 
-      if (!fornecedor) {
+      if (!contasPagar) {
         return res
           .status(500)
-          .json({ error: "Provider not found" + req.params.codigo });
+          .json({ error: "Contas a Pagar not found" + req.params.id });
       }
 
-      const produtos = await Produtos.find({ cliente: fornecedor._id });
-      return res.json(produtos);
+      return res.json(contasPagar);
     } catch (error) {
       console.log(error);
-      return res.status(500).json({ error: "Search products failed" });
+      return res.status(500).json({ error: "Search contas-a-pagar failed" });
     }
   }
 
-  async getByName(req, res) {
+  async quitarParcela(req, res) {
     try {
-      const providers = await Provider.find()
-        .where({
-          nome: new RegExp(req.query.nome, "i")
-        })
-        .or([
-          { tipo: ["provider"] },
-          { tipo: ["customer", "provider"] },
-          { tipo: ["provider", "customer"] }
-        ]);
+      const { valor, data } = req.body;
+      const contaApagar = await ContaPagar.findOne(
+        {
+          "parcelas._id": req.params.id
+        },
+        function(err, docs) {
+          docs.parcelas.forEach(doc => {
+            if (doc._id == req.params.id) {
+              doc.quitacao = { ok: true };
+              console.log(doc);
+              return res.json({ parcela: doc });
+            }
+          });
+        }
+      );
+      //
 
-      return res.json(providers);
+      return res.json({ contaApagar });
+
+      const updateContaPagar = await ContaPagar.findOneAndUpdate(
+        { parcelas: { _id: req.params.id } },
+        {
+          quitacao: {
+            valor_pago: valor,
+            data
+          }
+        }
+      );
+
+      return res.json({ updateContaPagar });
     } catch (error) {
       console.log(error);
-      return res.status(500).json({ error: "Search providers failed" });
+      return res.status(500).json({ error: "Failed" });
     }
   }
 }
