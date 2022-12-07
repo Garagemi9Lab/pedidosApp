@@ -16,7 +16,7 @@
     "bwip-js": "^1.7.3",
     "canvas": "^2.6.0",
     "date-fns": "^2.2.1",
-    "express": "^4.16.2",
+    "express": "^4.17.3",
     "express-query-int": "^2.0.0",
     "jsbarcode": "^3.11.0",
     "jsonwebtoken": "^8.5.1",
